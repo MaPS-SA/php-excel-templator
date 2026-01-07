@@ -605,8 +605,9 @@ class ReferenceHelper
 
         // Update workbook: define names
         if (count($worksheet->getParent()->getDefinedNames()) > 0) {
+            $hash = spl_object_id($worksheet);
             foreach ($worksheet->getParent()->getDefinedNames() as $definedName) {
-                if ($definedName->getWorksheet() !== null && $definedName->getWorksheet()->getHashCode() === $worksheet->getHashCode()) {
+                if ($definedName->getWorksheet() !== null && spl_object_id($definedName->getWorksheet()) === $hash) {
                     $definedName->setValue($this->updateCellReference($definedName->getValue(), $beforeCellAddress, $numberOfColumns, $numberOfRows));
                 }
             }
